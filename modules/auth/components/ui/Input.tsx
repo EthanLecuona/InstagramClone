@@ -1,4 +1,5 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet } from "react-native";
+import { Text } from "@rneui/themed";
 import { useTheme } from "@rneui/themed";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -9,51 +10,55 @@ function Input({
   value,
   isInvalid,
   placeholder,
-  icon,
+  label,
 }: any) {
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     inputContainer: {
-      marginVertical: 12,
+      // flex: 1,
+      marginVertical: 4,
       paddingVertical: 12,
-      paddingHorizontal: 4,
+      paddingHorizontal: 20,
       borderWidth: 1,
-      borderColor: theme.colors.primary,
-      borderRadius: 5,
-      flexDirection: "row",
+      borderColor: "#475A6A",
+      backgroundColor: "#1C2A33",
+      borderRadius: 15,
+      flexDirection: "column",
       alignSelf: "center",
       justifyContent: "flex-start",
-      alignItems: "center",
-      width: "90%",
+      alignItems: "flex-start",
+      width: "100%",
     },
     labelInvalid: {
       color: theme.colors.error,
     },
-    input: {
-      paddingVertical: 8,
+    label: {
+      color: "#CDD2D6",
       paddingHorizontal: 6,
-      backgroundColor: theme.colors.background,
+      fontSize: 15,
+    },
+    input: {
+      paddingHorizontal: 6,
+      backgroundColor: "transparent",
       borderRadius: 4,
-      fontSize: 16,
+      fontSize: 17,
+      fontWeight: "bold",
       color: !isInvalid ? theme.colors.black : theme.colors.primary,
       flex: 1,
-    },
-    icon: {
-      paddingHorizontal: 12,
-      color: !isInvalid ? theme.colors.black : theme.colors.primary,
+      width: "100%",
     },
   });
+
   return (
     <View style={styles.inputContainer}>
-      <Ionicons
-        style={styles.icon}
-        name={icon}
-        size={24}
-        // color={theme.colors.black}
-      />
+      {label && value && (
+        <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
+          {label}
+        </Text>
+      )}
       <TextInput
         style={[styles.input]}
-        placeholderTextColor={theme.colors.black}
+        placeholderTextColor={"#727F85"}
         autoCapitalize="none"
         keyboardType={keyboardType}
         secureTextEntry={secure}
@@ -61,14 +66,6 @@ function Input({
         value={value}
         placeholder={placeholder}
       />
-      {/* {isInvalid && (
-        <Ionicons
-          name="checkmark-circle-outline"
-          size={24}
-          color="green"
-          style={{ paddingRight: 8 }}
-        />
-      )} */}
     </View>
   );
 }

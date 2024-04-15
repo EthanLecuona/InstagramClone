@@ -15,6 +15,8 @@ import RegisterScreen from "../auth/screens/RegisterScreen";
 import PostScreen from "../posts/screens/PostScreen";
 import { Ionicons } from "@expo/vector-icons";
 import RemoveAccountScreen from "../auth/screens/RemoveAccountScreen";
+import LandingScreen from "../auth/screens/LandingScreen";
+import ForgotPasswordScreen from "../auth/screens/ForgotPasswordScreen";
 
 const BottomTabs = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -62,27 +64,40 @@ function AuthNavigation() {
   return (
     <StackAuth.Navigator
       screenOptions={{
-        headerStyle: { backgroundColor: theme.colors.background },
+        headerStyle: { backgroundColor: "transparent" },
         headerTintColor: theme.colors.black,
         headerTitleAlign: "center",
         contentStyle: { backgroundColor: theme.colors.background },
-        headerShadowVisible: false,
+        headerTransparent: true,
       }}
     >
       <StackAuth.Screen
-        name="Login"
-        component={LoginScreen}
+        name="Landing"
+        component={LandingScreen}
         options={{
           title: "Signin",
           headerShown: false,
         }}
       />
       <StackAuth.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          title: "",
+        }}
+      />
+      <StackAuth.Screen
         name="Register"
         component={RegisterScreen}
         options={{
-          title: "Signup",
-          headerShown: false,
+          title: "",
+        }}
+      />
+      <StackAuth.Screen
+        name="ForgotPassword"
+        component={ForgotPasswordScreen}
+        options={{
+          title: "",
         }}
       />
       <StackAuth.Screen
@@ -90,6 +105,9 @@ function AuthNavigation() {
         component={RemoveAccountScreen}
         options={{
           title: "",
+          headerStyle: {
+            backgroundColor: "transparent",
+          },
           // headerShown: false,
         }}
       />

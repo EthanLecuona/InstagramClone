@@ -1,17 +1,12 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@rneui/themed";
 
-function ButtonOutline({ children, onPress, buttonStyle, textStyle }: any) {
+function FlatButton({ children, onPress, textStyle }: any) {
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     button: {
-      borderRadius: 40,
-      borderWidth: 1,
-      borderColor: theme.colors.primary,
-      paddingVertical: 15,
-      paddingHorizontal: 12,
-      minWidth: "100%",
-      alignSelf: "center",
+      paddingVertical: 6,
+      paddingHorizontal: 4,
     },
     pressed: {
       opacity: 0.7,
@@ -19,18 +14,12 @@ function ButtonOutline({ children, onPress, buttonStyle, textStyle }: any) {
     buttonText: {
       textAlign: "center",
       color: theme.colors.black,
-      fontSize: 16,
-      fontWeight: "bold",
     },
   });
-
+  
   return (
     <Pressable
-      style={({ pressed }) => [
-        styles.button,
-        pressed && styles.pressed,
-        buttonStyle,
-      ]}
+      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
       onPress={onPress}
     >
       <View>
@@ -40,4 +29,4 @@ function ButtonOutline({ children, onPress, buttonStyle, textStyle }: any) {
   );
 }
 
-export default ButtonOutline;
+export default FlatButton;

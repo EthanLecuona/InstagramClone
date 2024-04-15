@@ -1,5 +1,6 @@
 export type RootStackParamListAuth = {
-  Signin: undefined;
-  Signup: undefined;
+  Login: undefined;
+  Register: undefined;
   RemoveAccount: undefined;
+  ForgotPassword: undefined;
 };

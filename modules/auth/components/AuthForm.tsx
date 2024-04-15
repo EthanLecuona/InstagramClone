@@ -30,9 +30,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }: any) {
       case "password":
         setEnteredPassword(enteredValue);
         break;
-      case "confirmPassword":
-        setEnteredConfirmPassword(enteredValue);
-        break;
     }
   }
 
@@ -40,7 +37,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }: any) {
     onSubmit({
       email: enteredEmail,
       password: enteredPassword,
-      confirmPassowrd: enteredConfirmPassowrd,
     });
   }
 
@@ -48,11 +44,6 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }: any) {
   const styles = StyleSheet.create({
     buttons: {
       marginTop: 12,
-    },
-    container: {
-      // flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
     },
   });
 
@@ -66,33 +57,25 @@ function AuthForm({ isLogin, onSubmit, credentialsInvalid }: any) {
             keyboardType="email-address"
             isInvalid={emailIsInvalid}
             secure={false}
-            placeholder={"Enter your email"}
+            placeholder={"Username, email or mobile number"}
             icon={"mail-outline"}
+            label={"Username, email or mobile number"}
           />
           <Input
             onUpdateValue={updateInputValueHandler.bind(null, "password")}
             secure
             value={enteredPassword}
             isInvalid={passwordIsInvalid}
-            placeholder={"Enter your password"}
+            placeholder={"Password"}
             icon={"lock-closed-outline"}
+            label={"Password"}
           />
-          {!isLogin && (
-            <Input
-              onUpdateValue={updateInputValueHandler.bind(
-                null,
-                "passwordConfirm"
-              )}
-              secure
-              value={passwordsNoMatch}
-              isInvalid={passwordIsInvalid}
-              placeholder={"Enter your password"}
-              icon={"lock-closed-outline"}
-            />
-          )}
           <View style={styles.buttons}>
             <Button onPress={submitHandler}>
-              {isLogin ? "Log In" : "Sign Up"}
+              {isLogin ? "Log In" : "Create an account"}
+            </Button>
+            <Button onPress={submitHandler}>
+              {isLogin ? "Log In" : "Create an account"}
             </Button>
           </View>
         </View>

@@ -1,5 +1,7 @@
 import { create } from "zustand";
-import { supabase } from "../lib/SupaBase"; // Adjust the import path as necessary
+//SupaBase Client
+import { supabase } from "../lib/SupaBase";
+
 import { Session, User } from "@supabase/supabase-js";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";

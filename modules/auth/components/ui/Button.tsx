@@ -1,10 +1,11 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useTheme } from "@rneui/themed";
 
-function Button({ children, onPress }: any) {
+function Button({ children, onPress, buttonStyle, textStyle }: any) {
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     button: {
+      marginVertical: 6,
       borderRadius: 40,
       paddingVertical: 15,
       paddingHorizontal: 12,
@@ -25,11 +26,15 @@ function Button({ children, onPress }: any) {
 
   return (
     <Pressable
-      style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+      style={({ pressed }) => [
+        styles.button,
+        pressed && styles.pressed,
+        buttonStyle,
+      ]}
       onPress={onPress}
     >
       <View>
-        <Text style={styles.buttonText}>{children}</Text>
+        <Text style={[styles.buttonText, textStyle]}>{children}</Text>
       </View>
     </Pressable>
   );
