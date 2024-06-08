@@ -6,15 +6,63 @@ import Button from "../components/ui/Button";
 import AuthFooter from "../components/AuthFooter";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RootStackParamListAuth } from "../../navigation/Routes";
+import { AuthRoutes } from "../../navigation/Routes";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { supabase } from "../../../lib/SupaBase";
+import { User } from "../../../utils/types";
+import { useUserStore } from "../../../store/UserStore";
 
 export default function LandingScreen() {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootStackParamListAuth>>();
+  const navigation = useNavigation<NativeStackNavigationProp<AuthRoutes>>();
+  const { setUser } = useUserStore();
 
+  const refreshSession = async () => {
+    const storedUserJSON = await AsyncStorage.getItem("user");
+    if (storedUserJSON) {
+      const storedUser: User = JSON.parse(storedUserJSON);
+      if (storedUser.accessToken) {
+        const { data: refreshData, error: refreshError } =
+          await supabase.auth.refreshSession({
+            refresh_token: storedUser.accessToken,
+          });
+
+        if (refreshError) {
+          return;
+        }
+
+        const { data: profileData, error: profileError } = await supabase
+          .from("profile")
+          .select("username, fullname, avatarurl")
+          .eq("userid", refreshData.user?.id);
+
+        if (profileError) {
+          return;
+        }
+
+        setUser({
+          email: refreshData?.user?.email,
+          accessToken: refreshData?.session?.access_token,
+          mobileNumber: refreshData?.user?.phone,
+          username: profileData[0].username,
+          fullname: profileData[0].fullname,
+          avatarUrl: profileData[0].avatarurl,
+          isAuthenticated: true,
+        });
+      }
+    } else {
+      console.log("No user stored");
+    }
+  };
+  refreshSession();
   const { theme } = useTheme();
   const styles = StyleSheet.create({
+    container: {
+      alignItems: "center",
+      justifyContent: "center",
+      flexDirection: "column",
+      flex: 1,
+    },
     logo: {
       height: 75,
       width: 75,
@@ -45,7 +93,6 @@ export default function LandingScreen() {
       paddingHorizontal: 15,
     },
     buttonContainer: {
-      flex: 1,
       paddingHorizontal: 20,
       paddingTop: 20,
       flexDirection: "column",
@@ -74,7 +121,7 @@ export default function LandingScreen() {
     navigation.navigate("Register");
   }
   return (
-    <Background>
+    <View style={styles.container}>
       <View style={styles.settingsRow}>
         <Ionicons
           name="settings-outline"
@@ -107,6 +154,6 @@ export default function LandingScreen() {
         </Button>
       </View>
       <AuthFooter />
-    </Background>
+    </View>
   );
 }

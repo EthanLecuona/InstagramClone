@@ -1,6 +1,16 @@
 import "@rneui/themed";
 import { ThemeProvider, createTheme } from "@rneui/themed";
 import Nav from "./modules/navigation/Nav";
+import { AppState } from "react-native";
+import { supabase } from "./lib/SupaBase";
+
+AppState.addEventListener("change", (state) => {
+  if (state === "active") {
+    supabase.auth.startAutoRefresh();
+  } else {
+    supabase.auth.stopAutoRefresh();
+  }
+});
 
 declare module "@rneui/themed" {
   export interface Colors {

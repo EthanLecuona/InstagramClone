@@ -52,7 +52,7 @@ function Input({
   return (
     <View style={styles.inputContainer}>
       {label && value && (
-        <Text style={[styles.label, isInvalid && styles.labelInvalid]}>
+        <Text style={[styles.label, !isInvalid && styles.labelInvalid]}>
           {label}
         </Text>
       )}

@@ -2,96 +2,35 @@ import { create } from "zustand";
 //SupaBase Client
 import { supabase } from "../lib/SupaBase";
 
-import { Session, User } from "@supabase/supabase-js";
+import { Session } from "@supabase/supabase-js";
 import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { User } from "../utils/types";
 
-interface UserState {
-  user:
-    | {
-        email: string | null | undefined;
-        username: string | null;
-        fullname: string | null;
-        avatarUrl: string | undefined;
-        accessToken: string | null | undefined;
-      }
-    | null
-    | undefined;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
+interface UserStore {
+  user: User | null;
+  setUser: (newUserDetails: Partial<User> | null) => void;
   signOut: () => Promise<void>;
   providerSignIn: (session: Session) => Promise<void>;
   updateUser: (data: any) => Promise<void>;
 }
 
-export const useUserStore = create<UserState>((set) => ({
+export const useUserStore = create<UserStore>((set) => ({
   user: null,
-  signIn: async (email, password) => {
-    const { data: signInData, error: signInError } =
-      await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-    if (signInError) {
-      Alert.alert("Error Authenticating", signInError.message, [
-        {
-          text: "Ok",
-          style: "default",
+  setUser: (newUserDetails: Partial<User> | null) => {
+    set((state) => {
+      if (newUserDetails === null) {
+        return { ...state, user: null };
+      }
+      // Ensure existing user data is maintained unless explicitly overridden
+      const existingUser = state.user || {};
+      return {
+        ...state,
+        user: {
+          ...existingUser,
+          ...newUserDetails,
         },
-      ]);
-      return;
-    }
-
-    const { data: profileData, error: profileError } = await supabase
-      .from("profiles")
-      .select("username, full_name, avatar_url")
-      .eq("id", signInData.user.id);
-
-    if (profileError) {
-      Alert.alert("Error Authenticating", profileError.message, [
-        {
-          text: "Ok",
-          style: "default",
-        },
-      ]);
-      return;
-    }
-
-    await AsyncStorage.setItem("accessToken", signInData.session.access_token);
-
-    set({
-      user: {
-        email: signInData.user.email,
-        username: profileData[0].username,
-        avatarUrl: profileData[0].avatar_url,
-        fullname: profileData[0].full_name,
-        accessToken: signInData.session.access_token,
-      },
-    });
-  },
-  signUp: async (email, password) => {
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
-      { email, password }
-    );
-    if (signUpError) {
-      Alert.alert("Error Authenticating", signUpError.message, [
-        {
-          text: "Ok",
-          style: "default",
-        },
-      ]);
-      return;
-    }
-    if (!signUpData.session)
-      Alert.alert("Please check your inbox for email verification!");
-    set({
-      user: {
-        email: signUpData.user?.email,
-        accessToken: signUpData.session?.access_token,
-        username: null,
-        avatarUrl: undefined,
-        fullname: null,
-      },
+      };
     });
   },
   signOut: async () => {

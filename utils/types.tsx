@@ -1,11 +1,11 @@
-interface CommentLike {
+export interface CommentLike {
   commentLikeID: number; // PK
   commentID: number; // FK
   userID: number; // FK
   timeStamp: Date;
 }
 
-interface Comment {
+export interface Comment {
   commentID: number; // PK
   postID: number; // FK
   userID: number; // FK
@@ -13,7 +13,7 @@ interface Comment {
   timeStamp: Date;
 }
 
-interface DirectMessage {
+export interface DirectMessage {
   directMessageID: number; // PK
   senderID: number; // FK
   receiverID: number; // FK
@@ -22,26 +22,26 @@ interface DirectMessage {
   readTimeStamp: Date;
 }
 
-interface Follow {
+export interface Follow {
   followID: number; // PK
   followingID: number; // FK
   followerID: number; // FK
   timeStamp: Date;
 }
 
-interface Media {
+export interface Media {
   mediaID: number; // PK
   mediaTypeID: number; // FK
   postID: number; // FK
   size: number;
 }
 
-interface MediaType {
+export interface MediaType {
   mediaTypeID: number; // PK
   mimeType: string;
 }
 
-interface Post {
+export interface Post {
   postID: number; // PK
   mediaID: number; // FK
   userID: string; // FK
@@ -51,21 +51,21 @@ interface Post {
   timeStamp: Date;
 }
 
-interface PostLike {
+export interface PostLike {
   postLikeID: number; // PK
   userID: string; // FK
   postID: number; // FK
   timeStamp: Date;
 }
 
-interface PostMedia {
+export interface PostMedia {
   postMediaID: number; // PK
   postID: number; // FK
   mediaID: number; // FK
   count: number;
 }
 
-interface Profile {
+export interface Profile {
   profileID: number; // PK
   userID: string; // FK
   username: string;
@@ -74,7 +74,7 @@ interface Profile {
   bio: string;
 }
 
-interface Story {
+export interface Story {
   storyID: number; // PK
   mediaID: number; // FK
   userID: string; // FK
@@ -82,14 +82,14 @@ interface Story {
   timeStamp: Date;
 }
 
-interface StoryMedia {
+export interface StoryMedia {
   storyMediaID: number; // PK
   storyID: number; // FK
   mediaID: number; // FK
   size: number;
 }
 
-interface UserSettings {
+export interface UserSettings {
   settingID: number; // PK
   userID: string; // FK
   generalSettings: number; // FK
@@ -97,25 +97,25 @@ interface UserSettings {
   securitySettings: number; // FK
 }
 
-interface GeneralSettings {
+export interface GeneralSettings {
   genSettingID: number; // PK
   language: string;
   darkMode: boolean;
 }
 
-interface NotificationSettings {
+export interface NotificationSettings {
   notifSettingID: number; // PK
   pushNotifications: boolean;
 }
 
-interface PrivacySettings {
+export interface PrivacySettings {
   privSettingID: number; // PK
   lastSeen: boolean;
   publicProfile: boolean;
   invisible: boolean;
 }
 
-interface SecuritySettings {
+export interface SecuritySettings {
   secSettingID: number; // PK
   twoFactorAuth: boolean;
   loginAlerts: boolean;
@@ -123,3 +123,13 @@ interface SecuritySettings {
 }
 
 // And so on for the remaining entities in the ERD...
+
+export interface User {
+  email?: string | null;
+  mobileNumber?: string | null;
+  username?: string | null;
+  fullname?: string | null;
+  avatarUrl?: string | null;
+  accessToken?: string | null;
+  isAuthenticated?: boolean;
+}
