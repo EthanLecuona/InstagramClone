@@ -99,6 +99,12 @@ function SignupScreen() {
           });
           setIsAuthenticating(false);
           if (data != null && error != null) {
+            Alert.alert("Error", error.message, [
+              {
+                text: "Okay",
+                style: "default",
+              },
+            ]);
             return false;
           }
           setUser({ email: inputs.email.value });
@@ -112,6 +118,12 @@ function SignupScreen() {
             },
           });
           if (data != null && error != null) {
+            Alert.alert("Error", error.message, [
+              {
+                text: "Okay",
+                style: "default",
+              },
+            ]);
             return false;
           }
           setUser({ mobileNumber: inputs.mobileNumber.value });

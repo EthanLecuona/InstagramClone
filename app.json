@@ -37,6 +37,14 @@
             "./assets/fonts/FiraCode-Medium.ttf"
           ]
         }
+      ],
+      [
+        "expo-media-library",
+        {
+          "photosPermission": "Allow InstagramClone to access your photos.",
+          "savePhotosPermission": "Allow InstagramClone to save photos.",
+          "isAccessMediaLocationEnabled": true
+        }
       ]
     ]
   }

@@ -75,12 +75,14 @@ function LoginScreen() {
         password,
       });
     if (signInError) {
-      Alert.alert("Error Authenticating", signInError.message, [
+      console.log(signInError.message + signInError.name + signInError.status);
+      Alert.alert("Error Authenticating", "SignIn " + signInError.message, [
         {
           text: "Ok",
           style: "default",
         },
       ]);
+      setIsAuthenticating(false);
       return;
     }
 
@@ -90,12 +92,13 @@ function LoginScreen() {
       .eq("userid", signInData.user.id);
 
     if (profileError) {
-      Alert.alert("Error Authenticating", profileError.message, [
+      Alert.alert("Error Authenticating", "Profile " + profileError.message, [
         {
           text: "Ok",
           style: "default",
         },
       ]);
+      setIsAuthenticating(false);
       return;
     }
 
@@ -163,6 +166,10 @@ function LoginScreen() {
 
   function createAccount() {
     navigation.navigate("Register");
+  }
+
+  function forgotPassword() {
+    navigation.navigate("ForgotPassword");
   }
 
   const { theme } = useTheme();
@@ -251,7 +258,10 @@ function LoginScreen() {
             </Button>
           </View>
           <View style={styles.forgotPasswordContainer}>
-            <FlatButton textStyle={styles.forgotPasswordText}>
+            <FlatButton
+              onPress={forgotPassword}
+              textStyle={styles.forgotPasswordText}
+            >
               Forgot Password?
             </FlatButton>
           </View>

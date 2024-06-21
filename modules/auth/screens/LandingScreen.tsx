@@ -1,7 +1,6 @@
 import { Image } from "@rneui/base";
 import { Text, useTheme } from "@rneui/themed";
-import { StyleSheet, View } from "react-native";
-import Background from "../components/ui/Background";
+import { Alert, StyleSheet, View } from "react-native";
 import Button from "../components/ui/Button";
 import AuthFooter from "../components/AuthFooter";
 import { useNavigation } from "@react-navigation/native";
@@ -12,49 +11,97 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { supabase } from "../../../lib/SupaBase";
 import { User } from "../../../utils/types";
 import { useUserStore } from "../../../store/UserStore";
+import { useEffect, useState } from "react";
 
 export default function LandingScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthRoutes>>();
   const { setUser } = useUserStore();
 
-  const refreshSession = async () => {
-    const storedUserJSON = await AsyncStorage.getItem("user");
-    if (storedUserJSON) {
-      const storedUser: User = JSON.parse(storedUserJSON);
-      if (storedUser.accessToken) {
-        const { data: refreshData, error: refreshError } =
-          await supabase.auth.refreshSession({
-            refresh_token: storedUser.accessToken,
-          });
+  const [storedUser, setStoredUser] = useState<User | null>(null);
 
-        if (refreshError) {
-          return;
-        }
+  useEffect(() => {
+    const fetchStoredUser = async () => {
+      const storedUserJSON = await AsyncStorage.getItem("user");
+      if (storedUserJSON) {
+        const storedUser: User = JSON.parse(storedUserJSON);
+        setStoredUser(() => {
+          return {
+            ...storedUser,
+            isAuthenticated: false,
+          };
+        });
+      }
+    };
+    fetchStoredUser();
+  }, []);
 
-        const { data: profileData, error: profileError } = await supabase
-          .from("profile")
-          .select("username, fullname, avatarurl")
-          .eq("userid", refreshData.user?.id);
-
-        if (profileError) {
-          return;
-        }
-
+  async function login() {
+    if (storedUser?.accessToken) {
+      const { data: loginData, error: loginError } =
+        await supabase.auth.refreshSession({
+          refresh_token: storedUser.accessToken,
+        });
+      if (loginError || loginData.session == null) {
+        Alert.alert("Error", "An error occurred while logging in", [
+          {
+            text: "OK",
+            style: "default",
+          },
+        ]);
+        return;
+      }
+      if (loginData.session != null && loginData.user != null) {
         setUser({
-          email: refreshData?.user?.email,
-          accessToken: refreshData?.session?.access_token,
-          mobileNumber: refreshData?.user?.phone,
-          username: profileData[0].username,
-          fullname: profileData[0].fullname,
-          avatarUrl: profileData[0].avatarurl,
+          email: loginData.user.email,
+          accessToken: loginData.session.access_token,
+          mobileNumber: loginData.user.phone,
+          username: storedUser.username,
+          fullname: storedUser.fullname,
+          avatarUrl: storedUser.avatarUrl,
           isAuthenticated: true,
         });
       }
     } else {
-      console.log("No user stored");
+      Alert.alert("Error", "No user stored", [
+        {
+          text: "OK",
+          style: "default",
+        },
+      ]);
     }
-  };
-  refreshSession();
+  }
+
+  // const refreshSession = async () => {
+  //   const storedUserJSON = await AsyncStorage.getItem("user");
+  //   if (storedUserJSON) {
+  //     const storedUser: User = JSON.parse(storedUserJSON);
+  //     if (storedUser.accessToken) {
+  //       const { data: refreshData, error: refreshError } =
+  //         await supabase.auth.refreshSession({
+  //           refresh_token: storedUser.accessToken,
+  //         });
+
+  //       if (refreshError) {
+  //         return;
+  //       }
+  //       if (refreshData.session != null && refreshData.user != null) {
+  //         setUser({
+  //           email: refreshData.user.email,
+  //           accessToken: refreshData.session.access_token,
+  //           mobileNumber: refreshData.user.phone,
+  //           username: storedUser.username,
+  //           fullname: storedUser.fullname,
+  //           avatarUrl: storedUser.avatarUrl,
+  //           isAuthenticated: true,
+  //         });
+  //       }
+  //       return;
+  //     }
+  //   } else {
+  //     console.log("No user stored");
+  //   }
+  // };
+
   const { theme } = useTheme();
   const styles = StyleSheet.create({
     container: {
@@ -111,13 +158,13 @@ export default function LandingScreen() {
       backgroundColor: "transparent",
     },
   });
-  function RemoveAccount() {
+  function handleRemoveAccountScreen() {
     navigation.navigate("RemoveAccount");
   }
-  function Login() {
+  function handleLoginScreen() {
     navigation.navigate("Login");
   }
-  function Register() {
+  function handleRegisterScreen() {
     navigation.navigate("Register");
   }
   return (
@@ -127,28 +174,34 @@ export default function LandingScreen() {
           name="settings-outline"
           size={30}
           color={theme.colors.black}
-          onPress={RemoveAccount}
+          onPress={handleRemoveAccountScreen}
         />
       </View>
       <Image
-        source={require("../assets/InstagramOutline.png")}
+        source={require("../../../assets/logos/Instagram.png")}
         style={styles.logo}
       />
       <Image
-        source={require("../assets/ethan.jpg")}
+        source={
+          storedUser?.avatarUrl
+            ? { uri: storedUser?.avatarUrl }
+            : require("../../../assets/images/Profile.png")
+        }
         style={styles.profilePicture}
       />
-      <Text style={styles.username}>ethanlecuona</Text>
+      <Text style={styles.username}>
+        {storedUser ? storedUser.username : "Please Login"}
+      </Text>
       <View style={styles.buttonContainer}>
-        <Button>Log In</Button>
-        <Button onPress={Login} buttonStyle={styles.anotherAccount}>
+        <Button onPress={login}>Log In</Button>
+        <Button onPress={handleLoginScreen} buttonStyle={styles.anotherAccount}>
           Log into another account
         </Button>
 
         <Button
           buttonStyle={styles.createAccount}
           textStyle={{ color: "#4398FF" }}
-          onPress={Register}
+          onPress={handleRegisterScreen}
         >
           Create new account
         </Button>

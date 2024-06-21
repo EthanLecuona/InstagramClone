@@ -133,3 +133,8 @@ export interface User {
   accessToken?: string | null;
   isAuthenticated?: boolean;
 }
+
+export interface TopBaritem {
+  username: string;
+  avatarUrl: string;
+}
