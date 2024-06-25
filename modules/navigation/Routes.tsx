@@ -27,7 +27,8 @@ export type SearchRoutes = {
 
 export type PostRoutes = {
   SelectImage: undefined;
-  EditImage: undefined | { image: MediaLibrary.Asset };
+  EditImage: { image: MediaLibrary.Asset };
+  PostImage: { imageUri: string };
 };
 
 export type ReelRoutes = {

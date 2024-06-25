@@ -77,21 +77,25 @@ export default function SelectImageScreen() {
     });
     setAlbums(fetchedAlbums);
 
+    if (fetchedAlbums.length > 0) {
+      await setAssets(fetchedAlbums[0].id);
+    }
+  }
+
+  async function setAssets(albumId: string) {
     const fetchDefaultImage = await MediaLibrary.getAssetsAsync({
       first: 1,
       mediaType: [MediaLibrary.MediaType.photo, MediaLibrary.MediaType.video],
-      album: fetchedAlbums[0].id,
+      album: albumId,
       sortBy: MediaLibrary.SortBy.creationTime,
     });
-    async function setAssets() {
-      setDefaultImage(fetchDefaultImage.assets[0]);
-      var aspect = defaultImage!.width / defaultImage!.height;
-      setImageDimensions({
-        height: width * 0.9,
-        width: width * 0.9 * aspect,
-      });
-    }
-    await setAssets();
+    setDefaultImage(fetchDefaultImage.assets[0]);
+    var aspect =
+      fetchDefaultImage.assets[0].width / fetchDefaultImage.assets[0].height;
+    setImageDimensions({
+      height: width * 0.9,
+      width: width * 0.9 * aspect,
+    });
   }
 
   function handleImagePress(asset: MediaLibrary.Asset) {

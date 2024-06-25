@@ -38,6 +38,7 @@ import NavFlatButton from "./components/NavFlatButton";
 import NavSearchInput from "./components/NavSearchInput";
 import SelectImageScreen from "../post/screens/SelectImageScreen";
 import EditImageScreen from "../post/screens/EditImageScreen";
+import PostImageScreen from "../post/screens/PostImageScreen";
 
 const BottomTabs = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -219,6 +220,13 @@ function PostNavigation() {
               </View>
             );
           },
+        }}
+      />
+      <Stack.Screen
+        name="PostImage"
+        component={PostImageScreen}
+        options={{
+          title: "New Post",
         }}
       />
     </Stack.Navigator>

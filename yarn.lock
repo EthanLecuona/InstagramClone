@@ -2310,6 +2310,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-assets/slider@npm:^7.2.1":
+  version: 7.2.1
+  resolution: "@react-native-assets/slider@npm:7.2.1"
+  peerDependencies:
+    react: ">=16.13.1"
+    react-dom: ">=16.13.1"
+    react-native: ">=0.61.4"
+    react-native-web: ">=0.13.4"
+  checksum: 10c0/bf9183b398058ac10bfe178193eba2c7285ead50e4ef362f769afe7dc6f1971e24f8d7531ff1220e5409165b29ecffaa724d2cd46c7f80fd0d672aea67aa3784
+  languageName: node
+  linkType: hard
+
 "@react-native-async-storage/async-storage@npm:1.23.1":
   version: 1.23.1
   resolution: "@react-native-async-storage/async-storage@npm:1.23.1"
@@ -3335,6 +3347,26 @@ __metadata:
   version: 7.9.5
   resolution: "@types/babel__plugin-transform-runtime@npm:7.9.5"
   checksum: 10c0/119d8f88188c63eb21bf150d294991d3470e6aa90dc8ec9f634197760af8acc981564e29af9087bfa8ad713b5b5419cae03047cd225fccb9977bb97adf25a871
+  languageName: node
+  linkType: hard
+
+"@types/gl-react-native@npm:^3.15.8":
+  version: 3.15.8
+  resolution: "@types/gl-react-native@npm:3.15.8"
+  dependencies:
+    "@types/gl-react": "npm:*"
+    "@types/react": "npm:*"
+  checksum: 10c0/64126d4a7b9e20ab2381123db4e8dc8d48b877da155047087232db5303299bf7f5a24238a021601cd7674cf2e16b74a8fd7762f47bc5a0e05efab9be6178f8c6
+  languageName: node
+  linkType: hard
+
+"@types/gl-react@npm:*, @types/gl-react@npm:^3.15.8":
+  version: 3.15.8
+  resolution: "@types/gl-react@npm:3.15.8"
+  dependencies:
+    "@types/react": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: 10c0/200d3ef53efd849081999dee24dad5b2544ab09f2cd51eca17ebd674da9e8e48bbcdd91980ef47c4b77347e522bbc7e7a2a980f75a1061d1a755530e0dc255b2
   languageName: node
   linkType: hard
 
@@ -5154,6 +5186,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-gl-cpp@npm:^11.3.0, expo-gl-cpp@npm:~11.4.0":
+  version: 11.4.0
+  resolution: "expo-gl-cpp@npm:11.4.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/e0a11f0831adf45b1591e8697c201237ec9bbb936494450dd18a6c02e126716a9de39859bf72f427ee06e2b396da019ea5690e62ee3e3a9cca535a0898185608
+  languageName: node
+  linkType: hard
+
+"expo-gl@npm:^11.3.0":
+  version: 11.4.0
+  resolution: "expo-gl@npm:11.4.0"
+  dependencies:
+    expo-gl-cpp: "npm:~11.4.0"
+    invariant: "npm:^2.2.4"
+  peerDependencies:
+    expo: "*"
+  checksum: 10c0/e83c8aedd2841320d770150f8fb24e0823ca102b0abe424ce35872beb6458928f37467cdf00bdc8eb1670c80295c5ddd8c5eb3531e81210c3af85aab1472e79f
+  languageName: node
+  linkType: hard
+
 "expo-gl@npm:~14.0.2":
   version: 14.0.2
   resolution: "expo-gl@npm:14.0.2"
@@ -5721,6 +5774,37 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gl-react-expo@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "gl-react-expo@npm:5.2.1"
+  dependencies:
+    invariant: "npm:^2.2.4"
+    webgltexture-loader-expo: "npm:1.2.0"
+  peerDependencies:
+    expo-gl: "*"
+    gl-react: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/e0f15a79543de78d3aa6ab131ab115bf6695a9463809d6343345f65b7a2264a38b9cff13040b0a91f33fdf4f922d80549193467222b423fadd773f739cc294df
+  languageName: node
+  linkType: hard
+
+"gl-react-native@npm:^5.2.1":
+  version: 5.2.1
+  resolution: "gl-react-native@npm:5.2.1"
+  dependencies:
+    expo-gl: "npm:^11.3.0"
+    expo-gl-cpp: "npm:^11.3.0"
+    gl-react-expo: "npm:^5.2.1"
+    webgltexture-loader-expo: "npm:1.2.0"
+  peerDependencies:
+    gl-react: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 10c0/c33e303ef676857339961a32b5b7f6fa83f9262dd801bb6887d3ee5b1d786966ee626e79657ed81952a0919f60330f10ecf53c0d5dc7f82b33a9c5f84f3e4e07
+  languageName: node
+  linkType: hard
+
 "gl-react@npm:^5.2.0":
   version: 5.2.0
   resolution: "gl-react@npm:5.2.0"
@@ -6162,6 +6246,7 @@ __metadata:
     "@babel/plugin-transform-template-literals": "npm:^7.24.1"
     "@expo/metro-runtime": "npm:~3.2.1"
     "@expo/vector-icons": "npm:^14.0.0"
+    "@react-native-assets/slider": "npm:^7.2.1"
     "@react-native-async-storage/async-storage": "npm:1.23.1"
     "@react-navigation/bottom-tabs": "npm:^6.5.20"
     "@react-navigation/drawer": "npm:^6.6.15"
@@ -6172,6 +6257,8 @@ __metadata:
     "@rneui/themed": "npm:^4.0.0-rc.8"
     "@supabase/supabase-js": "npm:^2.39.8"
     "@types/babel__plugin-transform-runtime": "npm:^7"
+    "@types/gl-react": "npm:^3.15.8"
+    "@types/gl-react-native": "npm:^3.15.8"
     "@types/react": "npm:~18.2.79"
     "@types/react-native": "npm:^0.73.0"
     babel-plugin-module-resolver: "npm:^5.0.2"
@@ -6188,6 +6275,7 @@ __metadata:
     expo-status-bar: "npm:~1.12.1"
     expo-web-browser: "npm:~13.0.3"
     gl-react: "npm:^5.2.0"
+    gl-react-native: "npm:^5.2.1"
     react: "npm:18.2.0"
     react-art: "npm:^18.2.0"
     react-dom: "npm:18.2.0"
@@ -10265,6 +10353,18 @@ __metadata:
     expo-modules-core: "*"
     react-native: "*"
   checksum: 10c0/95f6f9c288f17f22aa7523352b14f8c033bd9496c3e9597c475e5872ceb16aba788986f5e0b9fe1a9c4d6f7c2cc3a832774b46a8c2687d6699673a34294556e8
+  languageName: node
+  linkType: hard
+
+"webgltexture-loader-expo@npm:1.2.0":
+  version: 1.2.0
+  resolution: "webgltexture-loader-expo@npm:1.2.0"
+  dependencies:
+    webgltexture-loader: "npm:^1.0.0"
+  peerDependencies:
+    expo-modules-core: "*"
+    react-native: "*"
+  checksum: 10c0/9a0483c3cdb0b7ebf49891aa5d58f1da30cff3596df762ab2229ea0c8e4aeaf36277eab364c59ecabf650a0a0265a2548de366263896b50d44149063f0156137
   languageName: node
   linkType: hard
 

@@ -138,3 +138,17 @@ export interface TopBaritem {
   username: string;
   avatarUrl: string;
 }
+
+export interface FilterSettings {
+  sepia?: number;
+  hue?: number;
+  blur?: number;
+  sharpen?: number;
+  negative?: number;
+  temperature?: number;
+  brightness?: number;
+  contrast?: number;
+  saturation?: number;
+  exposure?: number;
+  colorOverlay?: number[];
+}
