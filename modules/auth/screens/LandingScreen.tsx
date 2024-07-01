@@ -1,6 +1,5 @@
-import { Image } from "@rneui/base";
 import { Text, useTheme } from "@rneui/themed";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Image } from "react-native";
 import Button from "../components/ui/Button";
 import AuthFooter from "../components/AuthFooter";
 import { useNavigation } from "@react-navigation/native";
@@ -12,6 +11,7 @@ import { supabase } from "../../../lib/SupaBase";
 import { User } from "../../../utils/types";
 import { useUserStore } from "../../../store/UserStore";
 import { useEffect, useState } from "react";
+import { links } from "../../../utils/links";
 
 export default function LandingScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<AuthRoutes>>();
@@ -178,14 +178,22 @@ export default function LandingScreen() {
         />
       </View>
       <Image
-        source={require("../../../assets/logos/Instagram.png")}
+        source={{
+          uri: links.logo,
+        }}
         style={styles.logo}
       />
+      {/* <Image
+        source={require("../../../assets/logos/Instagram.png")}
+        style={styles.logo}
+      /> */}
       <Image
         source={
           storedUser?.avatarUrl
             ? { uri: storedUser?.avatarUrl }
-            : require("../../../assets/images/Profile.png")
+            : {
+                uri: links.profile,
+              }
         }
         style={styles.profilePicture}
       />

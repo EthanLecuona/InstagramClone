@@ -9,7 +9,7 @@ import { User } from "../utils/types";
 
 interface UserStore {
   user: User | null;
-  setUser: (newUserDetails: Partial<User> | null) => void;
+  setUser: (userDetails: Partial<User> | null) => void;
   signOut: () => Promise<void>;
   providerSignIn: (session: Session) => Promise<void>;
   updateUser: (data: any) => Promise<void>;
@@ -17,9 +17,9 @@ interface UserStore {
 
 export const useUserStore = create<UserStore>((set) => ({
   user: null,
-  setUser: (newUserDetails: Partial<User> | null) => {
+  setUser: (userDetails: Partial<User> | null) => {
     set((state) => {
-      if (newUserDetails === null) {
+      if (userDetails === null) {
         return { ...state, user: null };
       }
       // Ensure existing user data is maintained unless explicitly overridden
@@ -28,7 +28,7 @@ export const useUserStore = create<UserStore>((set) => ({
         ...state,
         user: {
           ...existingUser,
-          ...newUserDetails,
+          ...userDetails,
         },
       };
     });

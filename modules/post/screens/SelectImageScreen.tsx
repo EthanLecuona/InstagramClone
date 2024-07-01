@@ -15,8 +15,10 @@ import * as MediaLibrary from "expo-media-library";
 import { PostRoutes } from "../../navigation/Routes";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import FlatButton from "../../shared/components/FlatButton";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import Zoom from "react-native-zoom-reanimated";
 
-const { width } = Dimensions.get("screen");
+const { width, height } = Dimensions.get("screen");
 
 export default function SelectImageScreen() {
   const navigation = useNavigation<NativeStackNavigationProp<PostRoutes>>();
@@ -109,21 +111,24 @@ export default function SelectImageScreen() {
 
   return (
     <>
-      <View style={styles.imageContainer}>
-        {image || defaultImage ? (
-          <Image
-            source={
-              image
-                ? { uri: image.uri.toString() }
-                : { uri: defaultImage?.uri.toString() }
-            }
-            width={imageDimensions.width}
-            height={imageDimensions.height}
-          />
-        ) : (
-          <Text>No Image</Text>
-        )}
-      </View>
+      <GestureHandlerRootView style={styles.imageContainer}>
+        <Zoom>
+          {image || defaultImage ? (
+            <Image
+              source={
+                image
+                  ? { uri: image.uri.toString() }
+                  : { uri: defaultImage?.uri.toString() }
+              }
+              width={imageDimensions.width}
+              height={imageDimensions.height}
+            />
+          ) : (
+            <Text>No Image</Text>
+          )}
+        </Zoom>
+      </GestureHandlerRootView>
+
       <SafeAreaView style={styles.container}>
         <ScrollView>
           {albums &&
@@ -140,9 +145,10 @@ export default function SelectImageScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    height: width * 0.9,
+    height: height / 4,
   },
   imageContainer: {
+    flex: 1,
     flexDirection: "column",
     justifyContent: "center",
     alignSelf: "center",

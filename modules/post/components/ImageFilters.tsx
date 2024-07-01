@@ -1,6 +1,3 @@
-import React from "react";
-import { Shaders, Node, GLSL } from "gl-react";
-
 import Sepia from "./filters/Sepia";
 import Hue from "./filters/Hue";
 import Blur from "./filters/Blur";

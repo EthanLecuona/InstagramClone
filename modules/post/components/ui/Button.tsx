@@ -1,4 +1,4 @@
-import { AntDesign } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { Text, useTheme } from "@rneui/themed";
 import { Pressable, StyleSheet, View } from "react-native";
 
@@ -35,7 +35,7 @@ export default function Button({ children, onPress, style, icon }: any) {
     >
       <View style={styles.text}>
         <Text>{children}</Text>
-        {icon ? <AntDesign name={icon} size={18} color="white" /> : null}
+        {icon ? <Feather name={icon} size={20} color="white" /> : null}
       </View>
     </Pressable>
   );

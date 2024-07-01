@@ -8,8 +8,8 @@ import {
   ScrollView,
   StyleSheet,
   View,
+  Image,
 } from "react-native";
-import { Image } from "@rneui/base";
 import { Text } from "@rneui/themed";
 import { useTheme } from "@rneui/themed";
 import FlatButton from "../components/ui/FlatButton";
@@ -21,6 +21,7 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { AuthRoutes } from "../../navigation/Routes";
 import { supabase } from "../../../lib/SupaBase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { links } from "../../../utils/links";
 
 const aspectRation = 1080 / 2400;
 const { width } = Dimensions.get("window");
@@ -227,10 +228,7 @@ function LoginScreen() {
           contentContainerStyle={styles.authContent}
         >
           <Text>English (US)</Text>
-          <Image
-            source={require("../assets/InstagramOutline.png")}
-            style={styles.image}
-          />
+          <Image source={{ uri: links.logoOutline }} style={styles.image} />
           <Input
             onUpdateValue={handleValueChange.bind(null, "email")}
             value={inputs.email.value}
